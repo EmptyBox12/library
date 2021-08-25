@@ -1,4 +1,6 @@
 let library = [];
+let storageArray = [];
+
 const modal = document.querySelector("#modal");
 const addButton = document.querySelector("#button");
 const submitBook = document.querySelector("#submitButton");
@@ -6,6 +8,12 @@ const titleInput = document.querySelector("#titleInput");
 const authorInput = document.querySelector("#authorInput");
 const pagesInput = document.querySelector("#pagesInput");
 const readStatus = document.getElementsByName('isRead');
+const content = document.querySelector("#content");
+window.localStorage;
+let storedLibrary = JSON.parse(localStorage.getItem("library") || "[]");
+let i;
+
+
 
 
 
@@ -32,23 +40,68 @@ Book.prototype.isRead = function () {
     if (this.read) {
         return "Read";
     } else {
-        return "Not read";
+        return "Not Read";
     }
 }
+Book.prototype.setRead = function (read) {
+    this.read = read;
+
+}
+if (storedLibrary.length > 0) {
+    for (let i = 0; i < storedLibrary.length; i++) {
+        for (const key in storedLibrary[i]) {
+            storageArray.push(storedLibrary[i][key]);
+
+        }
+        library.push(new Book(storageArray[0], storageArray[1], storageArray[2], storageArray[3]));
+        storageArray = [];
+
+    }
+}
+
+if (library.length > 0) {
+    let i = library.length - 1;
+    while (i >= 0) {
+        createCard(library, true);
+
+        i--;
+    }
+    deleteButton();
+    changeReadStatus();
+    localStorage.setItem("library", JSON.stringify(library));
+
+
+}
+
+
+
 
 
 
 function addBookToLibrary(title, author, pages, read) {
     library.push(new Book(title, author, pages, read));
-    createCard(library);
+    createCard(library, false);
+    deleteButton();
+    changeReadStatus();
+    localStorage.setItem("library", JSON.stringify(library));
+
+
 }
 
-function createCard(library) {
-    let i = library.length - 1;
+function createCard(library, storage) {
+   
+    if (storage) {
+        if (i === undefined) {
+            i = 0;
+        } 
+    } else {
+        i = library.length - 1;
+    }
+   
 
-    const content = document.querySelector("#content");
 
     let card = document.createElement("div");
+    card.setAttribute("data-id", i);
     card.classList.add("card");
 
     let title = document.createElement("p");
@@ -69,15 +122,19 @@ function createCard(library) {
     let read = document.createElement("button");
     read.classList.add("read")
     read.textContent = library[i].isRead();
+    read.setAttribute("data-id", i);
     card.appendChild(read);
 
     let deleteButton = document.createElement("button");
     deleteButton.classList.add("delete");
     deleteButton.textContent = "Delete";
+    deleteButton.setAttribute("data-id", i);
     card.appendChild(deleteButton);
 
     content.appendChild(card);
-
+    if(storage){
+        i++;
+    }
 
 }
 
@@ -93,11 +150,54 @@ window.addEventListener("click", function (event) {
     }
 })
 submitBook.addEventListener("click", function () {
+    let title = titleInput.value;
+    let author = authorInput.value;
+    let pages = pagesInput.value;
     let readValue;
     for (i = 0; i < readStatus.length; i++) {
         if (readStatus[i].checked)
             readValue = readStatus[i].value;
     }
-    console.log(readValue);
-
+    addBookToLibrary(title, author, pages, readValue);
+    modal.style.display = "none";
 })
+function deleteButton() {
+    let deleteButton = document.querySelectorAll(".delete");
+    deleteButton.forEach(element => {
+        element.addEventListener("click", () => {
+            let id = element.dataset.id;
+            let removedDiv = document.querySelector(`[data-id="${id}"]`);
+            content.removeChild(removedDiv);
+            library.splice(id, 1);
+            localStorage.setItem("library", JSON.stringify(library));
+
+        });
+
+
+    });
+
+}
+function changeReadStatus() {
+    let readButton = document.querySelectorAll(".read");
+    readButton.forEach(element => {
+        element.addEventListener("click", () => {
+            let id = element.dataset.id;
+            if (element.textContent == "Read") {
+                element.textContent = "Not Read";
+                library[id].setRead(false);
+                localStorage.setItem("library", JSON.stringify(library));
+
+            } else {
+                element.textContent = "Read";
+                library[id].setRead(true);
+                localStorage.setItem("library", JSON.stringify(library));
+
+            }
+
+        });
+
+
+    });
+
+}
+
