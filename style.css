@@ -49,7 +49,6 @@ body{
 #middle{
     display: flex;
     justify-content: space-around;
- 
     background-color: seashell;
     flex: 1;
 }
@@ -120,4 +119,32 @@ body{
 .card .delete:active{
     filter: brightness(0.8);
 }
+#modal{
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top:130px ;
+    height:100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+    
+
+
+}
+#modalContent{
+    position: relative;
+    margin: auto;
+    background-color: #fefefe;
+    display: flex;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 20px;
+    border: 1px solid #888;
+    flex-direction: column;
+    justify-content: space-around;
+    height:45%;
+    width: 340px;
+    
+}
+
     

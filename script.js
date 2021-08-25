@@ -1,4 +1,13 @@
 let library = [];
+const modal = document.querySelector("#modal");
+const addButton = document.querySelector("#button");
+const submitBook = document.querySelector("#submitButton");
+const titleInput = document.querySelector("#titleInput");
+const authorInput = document.querySelector("#authorInput");
+const pagesInput = document.querySelector("#pagesInput");
+const readStatus = document.getElementsByName('isRead');
+
+
 
 function Book(title, author, pages, read) {
     this.title = title;
@@ -19,23 +28,23 @@ Book.prototype.getPages = function () {
     return this.pages;
 
 }
-Book.prototype.isRead = function(){
-    if(this.read){
+Book.prototype.isRead = function () {
+    if (this.read) {
         return "Read";
-    } else{
+    } else {
         return "Not read";
     }
 }
 
 
 
-function addBookToLibrary(title, author , pages, read) {
-    library.push(new Book(title,author,pages,read)); 
-    createCard(library);   
+function addBookToLibrary(title, author, pages, read) {
+    library.push(new Book(title, author, pages, read));
+    createCard(library);
 }
 
 function createCard(library) {
-    let i = library.length-1;
+    let i = library.length - 1;
 
     const content = document.querySelector("#content");
 
@@ -43,33 +52,52 @@ function createCard(library) {
     card.classList.add("card");
 
     let title = document.createElement("p");
-    title.textContent= library[i].getName();
+    title.textContent = library[i].getName();
     title.classList.add("title");
     card.appendChild(title);
-    
+
     let author = document.createElement("p");
     author.classList.add("author");
-    author.textContent="By "+library[i].getAuthor();
+    author.textContent = "By " + library[i].getAuthor();
     card.appendChild(author);
-    
+
     let pages = document.createElement("p");
     pages.classList.add("pages");
-    pages.textContent=library[i].getPages() +" pages";
+    pages.textContent = library[i].getPages() + " pages";
     card.appendChild(pages);
-    
+
     let read = document.createElement("button");
     read.classList.add("read")
     read.textContent = library[i].isRead();
     card.appendChild(read);
-    
+
     let deleteButton = document.createElement("button");
     deleteButton.classList.add("delete");
-    deleteButton.textContent="Delete";
+    deleteButton.textContent = "Delete";
     card.appendChild(deleteButton);
 
     content.appendChild(card);
 
-    
+
 }
-addBookToLibrary("The Wandering Inn" ,"Pirateaba",1000,true);
-addBookToLibrary("Punishment and Crime" ,"Dosto",323,false);
+
+addButton.addEventListener("click", function () {
+    modal.style.display = "block";
+})
+
+
+
+window.addEventListener("click", function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+})
+submitBook.addEventListener("click", function () {
+    let readValue;
+    for (i = 0; i < readStatus.length; i++) {
+        if (readStatus[i].checked)
+            readValue = readStatus[i].value;
+    }
+    console.log(readValue);
+
+})

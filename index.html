@@ -10,11 +10,32 @@
 </head>
 
 <body>
+  
+
     <div id="top">
         <div id="text">My Personal Library</div>
         <div id="buttonDiv"><button id="button">Add a Book</button></div>
+        
     </div>
     <div id="middle">
+        <div id="modal">
+            <div id="modalContent">
+                <input type="text" value="" placeholder="Title" id="titleInput" >
+                <input type="text" value="" placeholder="Author" id="authorInput">
+                <input type="number" value="" placeholder="Number of Pages" id="pagesInput">
+                <div id="readRadio">
+                    <input type="radio" value="true" name="isRead" id="read">
+                    <label for="read">Read</label>
+                    <input type="radio" value="false" name="isRead" id="notRead">
+                    <label for="notRead">Not Read</label>
+                </div>
+                <input type="submit" value="Submit" id="submitButton">
+    
+    
+            </div>
+        
+
+        </div>
         <div id="content">
             <!--<div class="card">
                 <p class="title">The Wandering Inn</p>
@@ -23,7 +44,7 @@
                 <button class="read">Read</button>
                 <button class="delete">Delete</button>
             </div>-->
-           
+
         </div>
 
 
