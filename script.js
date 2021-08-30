@@ -17,35 +17,37 @@ let i;
 
 
 
-function Book(title, author, pages, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.read = read;
-
-}
-
-Book.prototype.getName = function () {
-    return this.title;
-}
-Book.prototype.getAuthor = function () {
-    return this.author;
-
-}
-Book.prototype.getPages = function () {
-    return this.pages;
-
-}
-Book.prototype.isRead = function () {
-    if (this.read) {
-        return "Read";
-    } else {
-        return "Not Read";
+class Book {
+    constructor(title, author, pages, read) {
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.read = read;
+     
     }
-}
-Book.prototype.setRead = function (read) {
-    this.read = read;
 
+    getName() {
+        return this.title;
+    }
+    getAuthor() {
+        return this.author;
+    }
+    getPages() {
+        return this.pages;
+
+    }
+    isRead(){
+        if (this.read=="true") {
+            return "Read";
+            
+        } else {
+            
+            return "Not Read";
+        }
+    }
+    setRead(read) {
+        this.read = read;
+    }
 }
 if (storedLibrary.length > 0) {
     for (let i = 0; i < storedLibrary.length; i++) {
@@ -54,6 +56,7 @@ if (storedLibrary.length > 0) {
 
         }
         library.push(new Book(storageArray[0], storageArray[1], storageArray[2], storageArray[3]));
+     
         storageArray = [];
 
     }
@@ -89,15 +92,15 @@ function addBookToLibrary(title, author, pages, read) {
 }
 
 function createCard(library, storage) {
-   
+
     if (storage) {
         if (i === undefined) {
             i = 0;
-        } 
+        }
     } else {
         i = library.length - 1;
     }
-   
+
 
 
     let card = document.createElement("div");
@@ -132,7 +135,7 @@ function createCard(library, storage) {
     card.appendChild(deleteButton);
 
     content.appendChild(card);
-    if(storage){
+    if (storage) {
         i++;
     }
 
@@ -153,11 +156,14 @@ submitBook.addEventListener("click", function () {
     let title = titleInput.value;
     let author = authorInput.value;
     let pages = pagesInput.value;
-    let readValue;
+    let readValue="";
     for (i = 0; i < readStatus.length; i++) {
         if (readStatus[i].checked)
             readValue = readStatus[i].value;
     }
+    
+
+    
     addBookToLibrary(title, author, pages, readValue);
     modal.style.display = "none";
 })
@@ -189,7 +195,7 @@ function changeReadStatus() {
 
             } else {
                 element.textContent = "Read";
-                library[id].setRead(true);
+                library[id].setRead(true);    
                 localStorage.setItem("library", JSON.stringify(library));
 
             }
