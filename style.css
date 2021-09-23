@@ -158,10 +158,6 @@ body{
     height:100%;
     width: 100%;
     background-color: rgba(0,0,0,0.4);
-
-    
-
-
 }
 #modalContent{
     position: relative;
@@ -178,6 +174,35 @@ body{
     height:45%;
     width: 340px;
     
+}
+#errorModal{
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top:230px ;
+    height:100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.4);
+}
+#errorContent{
+    position: relative;
+    margin: auto;
+    background-color: #fefefe;
+    display: flex;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    flex-direction: column;
+    justify-content: center;
+    font-size: larger;
+    font-weight: bold;
+    color:darkred;
+    font-family: Arial, Helvetica, sans-serif;
+    align-items: center;
+    height:100px;
+    width: 300px;
 }
 #titleInput, #authorInput,#pagesInput{
     height: 30px;
